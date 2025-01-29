@@ -4,81 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Webpage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 8px;
-            position: relative;
-        }
-
-        .nav {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-        }
-
-        .nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        .nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            margin: 20px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        form {
-            margin-top: 20px;
-        }
-
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 80%;
-            max-width: 300px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #45a049;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -90,20 +16,35 @@
     </header>
     <main>
         <p>Fill out the form below:</p>
-        <form action="dashboard.html" method="POST">
-            <input type="text" name="name" placeholder="Enter your name" required>
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Enter your email" 
-                required 
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                title="Please enter a valid email address. For example: user@example.com">
+        <form id="userForm">
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <button type="submit">Submit</button>
         </form>
     </main>
     <footer>
         <p>&copy; 2025 My Webpage</p>
     </footer>
+
+    <script>
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+
+            // Get existing data from localStorage
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Add new user data
+            users.push({ name: name, email: email });
+
+            // Save back to localStorage
+            localStorage.setItem("users", JSON.stringify(users));
+
+            // Redirect to dashboard
+            window.location.href = "dashboard.html";
+        });
+    </script>
 </body>
 </html>
